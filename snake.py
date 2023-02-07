@@ -33,6 +33,8 @@ class Snake:
         self.snake_part.goto(position)
         self.snake_parts.append(self.snake_part)
 
+    def extend(self):
+        self.add_segment(self.snake_parts[-1].position())
 
     def move(self):
         for part in range(len(self.snake_parts) - 1, 0, -1):  # Start Stop Step
