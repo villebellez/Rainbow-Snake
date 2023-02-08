@@ -2,6 +2,7 @@ import time
 from turtle import Screen
 from snake import Snake
 from food import Food
+from scoreboard import Score
 
 screen = Screen()
 screen.setup(width=620, height=620)
@@ -19,9 +20,13 @@ screen.onkeypress(snake.left, "Left")
 screen.onkeypress(snake.right, "Right")
 
 game_on = True
+score = Score()
+score.create_borders()
 
 
 def game_over():
+    score.reset()
+    score.game_over()
     screen.update()
     time.sleep(3.5)
     snake.reset()
@@ -30,10 +35,13 @@ def game_over():
 while game_on:
     screen.update()
     time.sleep(0.1)
+    score.update_points()
     snake.move()
 
     if snake.head.distance(food) < 15:
         food.new_food()
+        score.points += 1
+        score.update_points()
         snake.extend()
 
     if snake.head.xcor() > 270 or snake.head.xcor() < -280 or snake.head.ycor() > 250 or snake.head.ycor() < -270:
