@@ -1,5 +1,4 @@
 from turtle import Turtle, colormode
-from random import randrange
 
 starting_positions = [(0, 0), (-20, 0), (-40, 0)]
 move_snake = 20
@@ -12,6 +11,9 @@ colormode(255)
 
 class Snake:
     def __init__(self):
+        self.colors_num = 0
+        self.colors_list = [[250, 145, 137], [252, 174, 124], [255, 230, 153], [249, 255, 181], [179, 245, 188],
+                            [214, 246, 255], [226, 203, 247], [209, 189, 255]]
         self.snake_parts = []
         self.create_snake()
         self.head = self.snake_parts[0]
@@ -21,10 +23,15 @@ class Snake:
             self.add_segment(position)
 
     def color(self):
-        R = randrange(50, 257, 10)
-        G = randrange(50, 257, 10)
-        B = randrange(50, 257, 10)
-        self.snake_part.color(R, G, B)
+        if self.colors_num >= 8:
+            self.colors_num = 0
+        self.colors = self.colors_list[self.colors_num]
+        self.colors_num += 1
+        r = self.colors[0]
+        g = self.colors[1]
+        b = self.colors[2]
+        self.snake_part.color(r, g, b)
+        return self.colors_num
 
     def add_segment(self, position):
         self.snake_part = Turtle("square")
@@ -63,5 +70,7 @@ class Snake:
         for body in self.snake_parts:
             body.reset()
         self.snake_parts.clear()
+        self.colors_num = 0
         self.create_snake()
         self.head = self.snake_parts[0]
+        return self.colors_num
